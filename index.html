@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aditi Singh | Backend Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg2: #0f1528;
+  --bg3: #151c35;
+  --card: #111827;
+  --border: rgba(99,179,237,0.15);
+  --accent: #63b3ed;
+  --accent2: #90cdf4;
+  --green: #68d391;
+  --purple: #b794f4;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --mono: 'Fira Code', monospace;
+  --sans: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.7;overflow-x:hidden;}
+
+/* NOISE + GRID BG */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,14,26,0.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 5%;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:var(--mono);font-size:14px;color:var(--accent);
+  text-decoration:none;letter-spacing:0.05em;
+}
+.nav-logo span{color:var(--text2);}
+.nav-links{display:flex;gap:1.75rem;list-style:none;}
+.nav-links a{
+  font-size:13px;font-weight:400;color:var(--text2);
+  text-decoration:none;font-family:var(--mono);
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--accent);}
+.nav-links a::before{content:'0';color:var(--accent);font-size:11px;margin-right:2px;}
+.nav-links li:nth-child(1) a::before{content:'01. ';}
+.nav-links li:nth-child(2) a::before{content:'02. ';}
+.nav-links li:nth-child(3) a::before{content:'03. ';}
+.nav-links li:nth-child(4) a::before{content:'04. ';}
+
+/* HERO */
+#hero{
+  min-height:100vh;padding-top:60px;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-left:10%;padding-right:5%;
+  position:relative;z-index:1;
+}
+.hero-greeting{
+  font-family:var(--mono);font-size:14px;color:var(--green);
+  margin-bottom:1rem;letter-spacing:0.05em;
+}
+.hero-name{
+  font-size:clamp(2.8rem,6vw,5rem);font-weight:600;
+  color:#ccd6f6;line-height:1.1;letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+}
+.hero-title{
+  font-size:clamp(1.8rem,4vw,3.5rem);font-weight:600;
+  color:var(--text3);line-height:1.1;letter-spacing:-0.02em;
+  margin-bottom:1.75rem;
+}
+.hero-bio{
+  font-size:15px;color:var(--text2);max-width:480px;
+  line-height:1.8;margin-bottom:2.5rem;
+}
+.typed-wrap{display:inline-block;}
+#typed{color:var(--accent);}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:middle;margin-left:2px;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-outline{
+  font-family:var(--mono);font-size:13px;
+  border:1px solid var(--accent);color:var(--accent);
+  padding:12px 28px;border-radius:4px;text-decoration:none;
+  transition:background 0.2s,color 0.2s;letter-spacing:0.05em;
+}
+.btn-outline:hover{background:rgba(99,179,237,0.1);}
+.btn-ghost{
+  font-family:var(--mono);font-size:13px;
+  border:1px solid var(--text3);color:var(--text2);
+  padding:12px 28px;border-radius:4px;text-decoration:none;
+  transition:border-color 0.2s,color 0.2s;letter-spacing:0.05em;
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:4rem;
+  padding-top:2rem;border-top:1px solid var(--border);
+}
+.stat-val{font-size:1.8rem;font-weight:600;color:var(--accent);font-family:var(--mono);}
+.stat-key{font-size:11px;color:var(--text3);margin-top:2px;letter-spacing:0.05em;text-transform:uppercase;}
+
+/* SECTION COMMON */
+.section{padding:6rem 10%;position:relative;z-index:1;}
+.sec-head{margin-bottom:3rem;}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:6px;}
+.sec-title{
+  font-size:clamp(1.5rem,3vw,2rem);font-weight:600;color:#ccd6f6;
+  display:flex;align-items:center;gap:1rem;
+}
+.sec-title::after{
+  content:'';flex:1;max-width:240px;height:1px;background:var(--border);
+}
+
+/* ABOUT */
+#about .about-grid{display:grid;grid-template-columns:3fr 2fr;gap:4rem;align-items:start;}
+.about-text p{color:var(--text2);font-size:15px;margin-bottom:1rem;line-height:1.85;}
+.about-text a{color:var(--accent);text-decoration:none;}
+.about-info{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;}
+.info-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;
+}
+.info-row:last-child{border-bottom:none;}
+.info-key{font-family:var(--mono);color:var(--accent);font-size:12px;}
+.info-val{color:var(--text2);}
+
+/* SKILLS */
+#skills{background:var(--bg2);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;}
+.skill-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1.5rem;
+  transition:border-color 0.3s,transform 0.2s;
+}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.skill-card-title{
+  font-family:var(--mono);font-size:12px;color:var(--accent);
+  margin-bottom:1rem;letter-spacing:0.05em;
+}
+.skill-list{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-pill{
+  font-size:12px;padding:4px 10px;
+  background:rgba(99,179,237,0.08);
+  border:1px solid rgba(99,179,237,0.2);
+  border-radius:3px;color:var(--text2);
+  font-family:var(--mono);
+}
+
+/* EXPERIENCE */
+.exp-container{position:relative;}
+.exp-item{
+  display:grid;grid-template-columns:200px 1fr;gap:2rem;
+  margin-bottom:3rem;padding-bottom:3rem;
+  border-bottom:1px solid var(--border);
+}
+.exp-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.exp-left{}
+.exp-date{font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:4px;}
+.exp-company{font-size:13px;font-weight:500;color:#ccd6f6;}
+.exp-loc{font-size:12px;color:var(--text3);margin-top:2px;}
+.exp-right{}
+.exp-role{font-size:1.1rem;font-weight:600;color:#ccd6f6;margin-bottom:1rem;}
+.exp-bullets{list-style:none;}
+.exp-bullets li{
+  font-size:14px;color:var(--text2);
+  padding-left:20px;position:relative;
+  margin-bottom:8px;line-height:1.7;
+}
+.exp-bullets li::before{
+  content:'▹';position:absolute;left:0;
+  color:var(--accent);font-size:12px;top:3px;
+}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem;}
+.exp-tag{
+  font-family:var(--mono);font-size:11px;
+  color:var(--accent2);
+  padding:2px 8px;border-radius:3px;
+  background:rgba(99,179,237,0.08);
+}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:1rem;}
+.kpi{
+  font-family:var(--mono);font-size:12px;
+  background:rgba(104,211,145,0.1);
+  border:1px solid rgba(104,211,145,0.3);
+  color:var(--green);padding:4px 12px;border-radius:20px;
+}
+
+/* PROJECTS */
+#projects{background:var(--bg2);}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+.project-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:2rem;
+  display:flex;flex-direction:column;
+  transition:border-color 0.3s,transform 0.2s;
+  position:relative;overflow:hidden;
+}
+.project-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.35s;
+}
+.project-card:hover{border-color:rgba(99,179,237,0.4);transform:translateY(-4px);}
+.project-card:hover::before{transform:scaleX(1);}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;}
+.proj-folder{font-size:2rem;color:var(--accent);}
+.proj-links{display:flex;gap:12px;}
+.proj-links a{color:var(--text3);text-decoration:none;font-size:18px;transition:color 0.2s;}
+.proj-links a:hover{color:var(--accent);}
+.proj-title{font-size:1rem;font-weight:600;color:#ccd6f6;margin-bottom:0.75rem;}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.75;flex:1;margin-bottom:1.25rem;}
+.proj-stack{display:flex;flex-wrap:wrap;gap:8px;}
+.proj-tech{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+/* CONTACT */
+#contact{text-align:center;}
+.contact-inner{max-width:560px;margin:0 auto;}
+.contact-tag{
+  font-family:var(--mono);font-size:13px;color:var(--accent);
+  margin-bottom:1rem;
+}
+.contact-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:600;color:#ccd6f6;margin-bottom:1rem;}
+.contact-sub{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:2.5rem;}
+.contact-email-link{
+  font-family:var(--mono);font-size:14px;color:var(--accent);
+  text-decoration:none;border:1px solid var(--accent);
+  padding:16px 36px;border-radius:4px;display:inline-block;
+  transition:background 0.2s;letter-spacing:0.05em;
+}
+.contact-email-link:hover{background:rgba(99,179,237,0.1);}
+
+/* SOCIAL SIDEBAR */
+.social-side{
+  position:fixed;bottom:0;left:2.5%;z-index:50;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.social-side a{color:var(--text3);text-decoration:none;font-size:18px;transition:color 0.2s,transform 0.2s;}
+.social-side a:hover{color:var(--accent);transform:translateY(-2px);}
+.social-side::after{content:'';width:1px;height:80px;background:var(--text3);}
+
+/* EMAIL SIDE */
+.email-side{
+  position:fixed;bottom:0;right:2.5%;z-index:50;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.email-side a{
+  font-family:var(--mono);font-size:12px;color:var(--text3);
+  text-decoration:none;writing-mode:vertical-rl;letter-spacing:0.1em;
+  transition:color 0.2s;
+}
+.email-side a:hover{color:var(--accent);}
+.email-side::after{content:'';width:1px;height:80px;background:var(--text3);}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:2rem;
+  font-family:var(--mono);font-size:12px;color:var(--text3);
+  border-top:1px solid var(--border);position:relative;z-index:1;
+}
+footer span{color:var(--accent);}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:0 5%;}
+  .nav-links{gap:1rem;}
+  .nav-links a{font-size:11px;}
+  .section{padding:4rem 5%;}
+  #hero{padding-left:5%;}
+  #about .about-grid{grid-template-columns:1fr;}
+  .exp-item{grid-template-columns:1fr;gap:0.75rem;}
+  .hero-stats{gap:1.5rem;flex-wrap:wrap;}
+  .social-side,.email-side{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- SOCIAL SIDEBAR -->
+<div class="social-side">
+  <a href="mailto:ms.aditisingh99@gmail.com" title="Email">✉</a>
+  <a href="https://linkedin.com" title="LinkedIn">in</a>
+  <a href="https://github.com" title="GitHub">⌥</a>
+</div>
+<div class="email-side">
+  <a href="mailto:ms.aditisingh99@gmail.com">ms.aditisingh99@gmail.com</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">aditi<span>.singh()</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-greeting">Hi, my name is</p>
+  <h1 class="hero-name">Aditi Singh.</h1>
+  <h2 class="hero-title">
+    I build <span class="typed-wrap"><span id="typed"></span><span class="cursor"></span></span>
+  </h2>
+  <p class="hero-bio">
+    Results-driven Backend Engineer with 3+ years of experience designing and delivering high-performance, scalable microservices using Java and Spring Boot in enterprise healthcare environments at Optum.
+  </p>
+  <div class="hero-btns">
+    <a class="btn-outline" href="#projects">See my work</a>
+    <a class="btn-ghost" href="mailto:ms.aditisingh99@gmail.com">Get in touch</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-val">3+</div><div class="stat-key">Years exp.</div></div>
+    <div><div class="stat-val">35%</div><div class="stat-key">Latency cut</div></div>
+    <div><div class="stat-val">99.9%</div><div class="stat-key">Data accuracy</div></div>
+    <div><div class="stat-val">10+</div><div class="stat-key">Features shipped</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="sec-head">
+    <div class="sec-num">// 01</div>
+    <h2 class="sec-title">About Me</h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>I'm a Backend Engineer based in <a href="#">Gurugram, India</a>, currently working at <a href="#">Optum Global Solutions</a> where I design enterprise-grade healthcare backend systems that serve thousands of users every day.</p>
+      <p>I'm passionate about clean architecture, SOLID principles, and building systems that don't just work — they scale, stay maintainable, and hold up under real production pressure. I've taken unit test coverage from 30% to over 80% on critical services and consistently delivered features with zero critical defects.</p>
+      <p>I'm actively expanding into full-stack development and am open to Backend, Java, and Full-Stack engineering roles where I can bring both depth and breadth to the team.</p>
+      <p>When I'm not writing code, I'm exploring new Java frameworks, reading about system design, or optimising things that probably don't need optimising.</p>
+    </div>
+    <div class="about-info">
+      <div class="info-row"><span class="info-key">name</span><span class="info-val">Aditi Singh</span></div>
+      <div class="info-row"><span class="info-key">role</span><span class="info-val">Backend Engineer</span></div>
+      <div class="info-row"><span class="info-key">company</span><span class="info-val">Optum Global Solutions</span></div>
+      <div class="info-row"><span class="info-key">location</span><span class="info-val">Gurugram, India</span></div>
+      <div class="info-row"><span class="info-key">education</span><span class="info-val">B.Tech IT · 8.3 CGPA</span></div>
+      <div class="info-row"><span class="info-key">email</span><span class="info-val" style="font-size:12px;">ms.aditisingh99@gmail.com</span></div>
+      <div class="info-row"><span class="info-key">status</span><span class="info-val" style="color:#68d391;">Open to work ✓</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="sec-head">
+    <div class="sec-num">// 02</div>
+    <h2 class="sec-title">Skills</h2>
+  </div>
+  <div class="skills-grid fade-up">
+    <div class="skill-card">
+      <div class="skill-card-title">// languages</div>
+      <div class="skill-list">
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">// backend</div>
+      <div class="skill-list">
+        <span class="skill-pill">Spring Boot</span>
+        <span class="skill-pill">REST APIs</span>
+        <span class="skill-pill">Microservices</span>
+        <span class="skill-pill">Hibernate/JPA</span>
+        <span class="skill-pill">Spring Security</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">// database</div>
+      <div class="skill-list">
+        <span class="skill-pill">MySQL</span>
+        <span class="skill-pill">SQL Server</span>
+        <span class="skill-pill">Redis</span>
+        <span class="skill-pill">Query Optimization</span>
+        <span class="skill-pill">Indexing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">// testing</div>
+      <div class="skill-list">
+        <span class="skill-pill">JUnit</span>
+        <span class="skill-pill">Mockito</span>
+        <span class="skill-pill">Postman</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">// devops & tools</div>
+      <div class="skill-list">
+        <span class="skill-pill">Git</span>
+        <span class="skill-pill">Docker</span>
+        <span class="skill-pill">Maven</span>
+        <span class="skill-pill">CI/CD</span>
+        <span class="skill-pill">IntelliJ IDEA</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">// frontend & practices</div>
+      <div class="skill-list">
+        <span class="skill-pill">HTML5</span>
+        <span class="skill-pill">CSS3</span>
+        <span class="skill-pill">Agile/Scrum</span>
+        <span class="skill-pill">SOLID</span>
+        <span class="skill-pill">Clean Architecture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="sec-head">
+    <div class="sec-num">// 03</div>
+    <h2 class="sec-title">Experience</h2>
+  </div>
+  <div class="exp-container fade-up">
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-date">Jun 2022 — Present</div>
+        <div class="exp-company">Optum Global Solutions</div>
+        <div class="exp-loc">Gurugram, India</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Associate Software Engineer</div>
+        <ul class="exp-bullets">
+          <li>Designed and enhanced enterprise-grade backend services using Java and REST APIs, supporting robust healthcare workflows at scale.</li>
+          <li>Built modular microservices with well-defined API contracts, enabling independent deployment and minimising inter-service coupling across the platform.</li>
+          <li>Delivered 10+ end-to-end features across design, development, QA and deployment — affecting thousands of healthcare users with zero critical defects.</li>
+          <li>Refactored legacy service components to SOLID principles, lifting unit test coverage from 30% to over 80%, enhancing long-term maintainability.</li>
+          <li>Collaborated with product, QA and DevOps teams to align development, testing and deployment pipelines.</li>
+          <li>Ensured 99.9% data accuracy through robust validation and real-time monitoring pipelines.</li>
+        </ul>
+        <div class="kpi-row">
+          <span class="kpi">500+ queries/sec</span>
+          <span class="kpi">35% latency reduction</span>
+          <span class="kpi">99.9% data accuracy</span>
+          <span class="kpi">25% reliability boost</span>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Java</span>
+          <span class="exp-tag">Spring Boot</span>
+          <span class="exp-tag">Microservices</span>
+          <span class="exp-tag">REST APIs</span>
+          <span class="exp-tag">MySQL</span>
+          <span class="exp-tag">Redis</span>
+          <span class="exp-tag">Docker</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="sec-head">
+    <div class="sec-num">// 04</div>
+    <h2 class="sec-title">Projects</h2>
+  </div>
+  <div class="projects-grid fade-up">
+    <div class="project-card">
+      <div class="proj-top">
+        <div class="proj-folder">⬡</div>
+        <div class="proj-links">
+          <a href="#" title="GitHub">&#60;/&#62;</a>
+          <a href="#" title="Live">↗</a>
+        </div>
+      </div>
+      <div class="proj-title">Scalable URL Shortener</div>
+      <p class="proj-desc">Production-grade URL shortening service with REST APIs for generation, redirection and click tracking. Optimised with Redis caching, indexed schema, JWT auth and rate limiting. Fully Dockerized with architectural documentation.</p>
+      <div class="proj-stack">
+        <span class="proj-tech">Spring Boot</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">MySQL</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">Redis</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">Docker</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">JWT</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="proj-top">
+        <div class="proj-folder">⬡</div>
+        <div class="proj-links">
+          <a href="#" title="GitHub">&#60;/&#62;</a>
+          <a href="#" title="Live">↗</a>
+        </div>
+      </div>
+      <div class="proj-title">Expense Tracker API</div>
+      <p class="proj-desc">Secure backend service for user-centric expense management with JWT-based authentication and fine-grained role-based access control. Features a normalized relational schema with strategic indexing for rapid, reliable data retrieval.</p>
+      <div class="proj-stack">
+        <span class="proj-tech">Java</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">Spring Boot</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">JWT</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">MySQL</span>
+        <span class="proj-tech"> · </span>
+        <span class="proj-tech">SOLID</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="contact-inner">
+    <div class="contact-tag">// 05. what's next?</div>
+    <h2 class="contact-title">Get In Touch</h2>
+    <p class="contact-sub">I'm currently open to new Backend and Full-Stack engineering opportunities. Whether you have a question, a role, or just want to say hi — my inbox is always open!</p>
+    <a class="contact-email-link" href="mailto:ms.aditisingh99@gmail.com">Say Hello</a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & Built by <span>Aditi Singh</span></p>
+  <p style="margin-top:4px;">+91 7880818914 · Gurugram, India</p>
+</footer>
+
+<script>
+// Typed effect
+const phrases = [
+  'backend systems.',
+  'scalable APIs.',
+  'microservices.',
+  'clean code.',
+];
+let pi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed');
+function type() {
+  const phrase = phrases[pi];
+  if (!deleting) {
+    el.textContent = phrase.slice(0, ci + 1);
+    ci++;
+    if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    el.textContent = phrase.slice(0, ci - 1);
+    ci--;
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 50 : 80);
+}
+type();
+
+// Scroll fade-in
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
